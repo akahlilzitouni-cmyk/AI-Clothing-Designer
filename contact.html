@@ -1,35 +1,83 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اتصل بنا</title>
+    <title>اتصل بنا - AI Clothing Designer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* إضافة تنسيق بسيط لنموذج الاتصال ليكون متجاوباً */
+        .contact-form {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: left;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+        .contact-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="email"],
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box; /* لضمان أن العرض يشمل البادينغ */
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+    </style>
 </head>
 <body>
     <header>
-        <h1>اتصل بنا</h1>
-        <nav>
-            <a href="index.html">الرئيسية</a> |
-            <a href="gallery.html">المعرض</a> |
-            <a href="contact.html">اتصل بنا</a>
-        </nav>
+        <div class="container">
+            <h1 class="logo">AI Designer</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">الرئيسية</a></li>
+                    <li><a href="gallery.html">المعرض</a></li>
+                    <li><a href="contact.html" class="active">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <main>
-        <section class="contact-form">
-            <h2>أرسل لنا رسالة</h2>
-            <form onsubmit="alert('تم إرسال رسالتك!'); return false;">
-                <input type="text" placeholder="الاسم" required>
-                <input type="email" placeholder="البريد الإلكتروني" required>
-                <textarea placeholder="رسالتك" required></textarea>
-                <button type="submit">إرسال</button>
+    <section class="fade-in">
+        <div class="container">
+            <h2>📧 تواصل معنا 📧</h2>
+            <p>نحن نحب أن نسمع منك! اترك لنا رسالة وسنتواصل معك قريباً.</p>
+            
+            <form class="contact-form">
+                <label for="name">الاسم:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">البريد الإلكتروني:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">الرسالة:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit" class="btn primary-btn pulse-effect">إرسال الرسالة</button>
             </form>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <footer>
-        <p>حقوق الطبع والنشر © 2025 AI Clothing Designer</p>
+        <div class="container">
+            <p>&copy; 2025 AI Clothing Designer. جميع الحقوق محفوظة.</p>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
