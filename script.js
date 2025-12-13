@@ -1,51 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // ----------------------------------------------------
-    // 1. تأثيرات الظهور عند التمرير (Scroll Fade-In Effects)
-    // ----------------------------------------------------
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
-    const faders = document.querySelectorAll('.fade-in');
+// إضافة للسلة
+function addToCart(name, price) {
+  cart.push({name, price});
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert("تمت إضافة المنتج");
+}
 
-    const appearOptions = {
-        threshold: 0,
-        rootMargin: "0px 0px -100px 0px" // تبدأ بالظهور قبل 100 بكسل من نهاية الشاشة
-    };
+// عرض الطلب
+if (document.getElementById("orderDetails")) {
+  let text = "";
+  let total = 0;
 
-    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-                return;
-            } else {
-                entry.target.classList.add('visible');
-                appearOnScroll.unobserve(entry.target);
-            }
-        });
-    }, appearOptions);
+  cart.forEach(item => {
+    text += `- ${item.name} : ${item.price} دج\n`;
+    total += item.price;
+  });
 
-    faders.forEach(fader => {
-        appearOnScroll.observe(fader);
-    });
+  text += `\nالمجموع: ${total} دج`;
+  document.getElementById("orderDetails").value = text;
+}
 
-    // ----------------------------------------------------
-    // 2. معرض الملابس التفاعلي (Interactive Gallery)
-    // ----------------------------------------------------
-    
-    const mainImage = document.getElementById('main-clothing-image');
-    const galleryButtons = document.querySelectorAll('.gallery-btn');
+// إرسال الطلب عبر واتساب
+document.getElementById("orderForm")?.addEventListener("submit", function(e){
+  e.preventDefault();
 
-    galleryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const newImageSrc = button.getAttribute('data-image');
-            
-            // تطبيق تأثير تلاشي (Fade-out)
-            mainImage.style.opacity = 0;
+  let name = this.querySelectorAll("input")[0].value;
+  let phone = this.querySelectorAll("input")[1].value;
+  let address = this.querySelectorAll("input")[2].value;
+  let order = document.getElementById("orderDetails").value;
 
-            // الانتظار قليلاً لتطبيق التلاشي، ثم تغيير الصورة وتطبيق (Fade-in)
-            setTimeout(() => {
-                mainImage.src = newImageSrc;
-                mainImage.style.opacity = 1;
-            }, 300); // 300 مللي ثانية تتوافق مع سرعة انتقال الصورة في CSS
-        });
-    });
+  let message = `
+🛍️ طلب جديد
+الاسم: ${name}
+الهاتف: ${phone}
+العنوان: ${address}
 
+📦 الطلب:
+${order}
+  `;
+
+  let whatsappNumber = "213668086810"; // رقمك صحيح 👍
+  let url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
 });
