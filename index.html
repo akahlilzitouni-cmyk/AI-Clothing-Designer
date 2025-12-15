@@ -1,17 +1,423 @@
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>متجر الملابس</title>
-<link rel="stylesheet" href="style.css">
+<title>Luxe.Closet - الرئيسية</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* --- تصميم عام --- */
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color:#fff;
+    background:#0d0d0d;
+    overflow-x:hidden;
+  }
+
+  /* --- شريط أعلى --- */
+  header {
+    position: sticky;
+    top:0;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 50px;
+    background: rgba(0,0,0,0.85);
+    box-shadow:0 4px 10px rgba(0,0,0,0.7);
+  }
+
+  header h1 {
+    color:#b2b200;
+    font-size:2rem;
+    text-shadow:1px 1px 6px rgba(0,0,0,0.5);
+  }
+
+  nav a {
+    text-decoration:none;
+    color:#fff;
+    margin-left:20px;
+    font-size:1.1rem;
+    position:relative;
+    transition:0.3s;
+  }
+
+  nav a:hover { color:#b2b200; }
+  nav a::after {
+    content:'';
+    position:absolute;
+    width:0;
+    height:2px;
+    background:#b2b200;
+    left:0; bottom:-5px;
+    transition: width 0.3s;
+  }
+  nav a:hover::after { width:100%; }
+
+  /* --- خلفية ديناميكية Parallax --- */
+  .hero {
+    height: 90vh;
+    background: url('https://images.unsplash.com/photo-1621833611518-88c4480a7f7f?auto=format&fit=crop&w=1470&q=80') no-repeat center center/cover;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+  }
+
+  .hero::after {
+    content:'';
+    position:absolute;
+    top:0; left:0; width:100%; height:100%;
+    background:rgba(0,0,0,0.5);
+  }
+
+  .hero-content {
+    position:relative;
+    z-index:1;
+    text-align:center;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity:0; transform:translateY(-20px);}
+    to {opacity:1; transform:translateY(0);}
+  }
+
+  .hero h2 {
+    font-size:3rem;
+    color:#b2b200;
+    margin-bottom:20px;
+    text-shadow:2px 2px 8px rgba(0,0,0,0.7);
+  }
+
+  .hero p {
+    font-size:1.2rem;
+    max-width:600px;
+    margin:0 auto 30px;
+  }
+
+  .btn-hero {
+    padding:15px 35px;
+    font-size:1.2rem;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(45deg,#556b2f,#b2b200);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 0 15px #b2b200, 0 0 30px #556b2f;
+    transition:all 0.3s ease;
+    animation: glow 2s infinite alternate;
+  }
+
+  .btn-hero:hover {
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 0 25px #b2b200,0 0 45px #556b2f;
+  }
+
+  @keyframes glow {
+    0% { box-shadow:0 0 10px #b2b200,0 0 20px #556b2f; }
+    100% { box-shadow:0 0 25px #b2b200,0 0 40px #556b2f; }
+  }
+
+  /* --- قسم المنتجات --- */
+  section.products-section {
+    padding:60px 20px;
+    text-align:center;
+  }
+
+  section.products-section h3 {
+    font-size:2rem;
+    color:#b2b200;
+    margin-bottom:40px;
+  }
+
+  .products {
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap:20px;
+    max-width:1000px;
+    margin:0 auto;
+  }
+
+  .product-card {
+    background:#1a1a1a;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.7);
+    transition:transform 0.3s,box-shadow 0.3s;
+  }
+
+  .product-card:hover {
+    transform:translateY(-5px);
+    box-shadow:0 0 25px rgba(178,178,0,0.7);
+  }
+
+  .product-card img {
+    width:100%;
+    border-radius:12px;
+    margin-bottom:15px;
+  }
+
+  .product-card h4 { font-size:1.2rem; margin-bottom:10px; }
+  .product-card p { font-size:1rem; color:#ccc; }
+
+  /* --- قسم الطلب مدمج --- */
+  section.order-section {
+    padding:60px 20px;
+    text-align:center;
+    background: linear-gradient(135deg,#0d0d0d,#2f4f2f);
+  }
+
+  section.order-section h3 {
+    font-size:2rem;
+    color:#fff;
+    margin-bottom:40px;
+  }
+
+  form {
+    background: rgba(0,0,0,0.8);
+    padding:40px;
+    border-radius:20px;
+    max-width:450px;
+    margin:0 auto;
+  }
+
+  label {
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    font-weight:bold;
+    margin-top:15px;
+  }
+
+  label i { margin-left:10px; color:#b2b200; }
+
+  input, select {
+    width:100%;
+    padding:12px 15px;
+    margin-top:5px;
+    border-radius:12px;
+    border:2px solid #556b2f;
+    background:#0d0d0d;
+    color:#fff;
+    font-size:1rem;
+    outline:none;
+    transition:all 0.3s;
+  }
+
+  input:focus, select:focus {
+    border-color:#b2b200;
+    box-shadow:0 0 12px #b2b200;
+  }
+
+  .btn {
+    width:100%;
+    padding:14px;
+    margin-top:20px;
+    font-size:1.1rem;
+    border:none;
+    border-radius:12px;
+    background: linear-gradient(45deg,#556b2f,#b2b200);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 0 15px #b2b200,0 0 30px #556b2f;
+    transition: all 0.3s ease;
+    animation: glow 2s infinite alternate;
+  }
+
+  .btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 25px #b2b200, 0 0 45px #556b2f;
+  }
+
+  .btn-clear {
+    background: linear-gradient(45deg,#8b0000,#ff4d4d);
+    box-shadow:0 0 15px #ff4d4d,0 0 25px #8b0000;
+    animation: glow-red 2s infinite alternate;
+    margin-top:10px;
+  }
+
+  @keyframes glow-red {
+    0% { box-shadow:0 0 10px #ff4d4d,0 0 20px #8b0000; }
+    100% { box-shadow:0 0 25px #ff4d4d,0 0 40px #8b0000; }
+  }
+
+  footer {
+    background:#0d0d0d;
+    padding:20px;
+    text-align:center;
+    color:#fff;
+  }
+
+</style>
 </head>
 <body>
 
-<h1>👕 luxe.closet.dz</h1>
-<p>اطلب ملابسك بسهولة عبر واتساب</p>
+<header>
+  <h1>Luxe.Closet</h1>
+  <nav>
+    <a href="#">الرئيسية</a>
+    <a href="#order">الطلب</a>
+    <a href="#products">المنتجات</a>
+    <a href="#">تواصل معنا</a>
+  </nav>
+</header>
 
-<a href="shop.html" class="btn big">🛒 الدخول إلى المتجر</a>
+<section class="hero">
+  <div class="hero-content">
+    <h2>اكتشف تشكيلتنا الفاخرة</h2>
+    <p>أفضل الملابس الشبابية بألوان وتصاميم مميزة. اطلب الآن واحصل على منتجاتك بسرعة!</p>
+    <button class="btn-hero" onclick="document.getElementById('order').scrollIntoView({behavior:'smooth'})">اطلب الآن</button>
+  </div>
+</section>
+
+<section class="products-section" id="products">
+  <h3>منتجاتنا</h3>
+  <div class="products">
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1521335629791-ce4aec67dd54?auto=format&fit=crop&w=400&q=80" alt="منتج 1">
+      <h4>تيشيرت شبابي</h4>
+      <p>مقاسات مختلفة، جودة عالية، تصميم عصري.</p>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1616628181374-f5b0f3aeb017?auto=format&fit=crop&w=400&q=80" alt="منتج 2">
+      <h4>هودي أنيق</h4>
+      <p>راحة وأناقة في نفس الوقت، مناسب لجميع الأوقات.</p>
+    </div>
+    <div class="product-card">
+      <img src="https://images.unsplash.com/photo-1593032465177-238ea3f5bbf6?auto=format&fit=crop&w=400&q=80" alt="منتج 3">
+      <h4>جاكيت عصري</h4>
+      <p>تصميم فخم ومتين، للأيام الباردة.</p>
+    </div>
+  </div>
+</section>
+
+<section class="order-section" id="order">
+  <h3>اطلب الآن</h3>
+  <form id="checkoutForm">
+    <label for="fname"><i class="fa-solid fa-user"></i> الاسم</label>
+    <input type="text" id="fname" placeholder="ادخل الاسم" required>
+
+    <label for="lname"><i class="fa-solid fa-user"></i> اللقب</label>
+    <input type="text" id="lname" placeholder="ادخل اللقب" required>
+
+    <label for="phone"><i class="fa-solid fa-phone"></i> رقم الهاتف</label>
+    <input type="tel" id="phone" placeholder="ادخل رقم الهاتف" required>
+
+    <label for="state"><i class="fa-solid fa-map-location-dot"></i> الولاية</label>
+    <select id="state" required>
+      <option value="">اختر الولاية</option>
+      <option>01 أدرار</option>
+      <option>02 الشلف</option>
+      <option>03 الأغواط</option>
+      <option>04 أم البواقي</option>
+      <option>05 باتنة</option>
+      <option>06 بجاية</option>
+      <option>07 بسكرة</option>
+      <option>08 بشار</option>
+      <option>09 البليدة</option>
+      <option>10 البويرة</option>
+      <option>11 تمنراست</option>
+      <option>12 تبسة</option>
+      <option>13 تلمسان</option>
+      <option>14 تيارت</option>
+      <option>15 تيزي وزو</option>
+      <option>16 الجزائر</option>
+      <option>17 الجلفة</option>
+      <option>18 جيجل</option>
+      <option>19 سطيف</option>
+      <option>20 سعيدة</option>
+      <option>21 سكيكدة</option>
+      <option>22 سيدي بلعباس</option>
+      <option>23 عنابة</option>
+      <option>24 قالمة</option>
+      <option>25 قسنطينة</option>
+      <option>26 المدية</option>
+      <option>27 مستغانم</option>
+      <option>28 المسيلة</option>
+      <option>29 معسكر</option>
+      <option>30 ورقلة</option>
+      <option>31 وهران</option>
+      <option>32 البيض</option>
+      <option>33 إليزي</option>
+      <option>34 برج بوعريريج</option>
+      <option>35 بومرداس</option>
+      <option>36 الطارف</option>
+      <option>37 تندوف</option>
+      <option>38 تيسمسيلت</option>
+      <option>39 الوادي</option>
+      <option>40 خنشلة</option>
+      <option>41 سوق أهراس</option>
+      <option>42 تيبازة</option>
+      <option>43 ميلة</option>
+      <option>44 عين الدفلى</option>
+      <option>45 النعامة</option>
+      <option>46 عين تموشنت</option>
+      <option>47 غرداية</option>
+      <option>48 غليزان</option>
+      <option>49 تيميمون</option>
+      <option>50 برج باجي مختار</option>
+      <option>51 أولاد جلال</option>
+      <option>52 بني عباس</option>
+      <option>53 إن صالح</option>
+      <option>54 إن قزام</option>
+      <option>55 توقرت</option>
+      <option>56 جانت</option>
+      <option>57 المغير</option>
+      <option>58 المنيعة</option>
+    </select>
+
+    <label for="size"><i class="fa-solid fa-shirt"></i> المقاس</label>
+    <select id="size" required>
+      <option value="">اختر المقاس</option>
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+      <option>XXL</option>
+    </select>
+
+    <button type="button" class="btn" onclick="sendWhatsApp()">تأكيد الطلب</button>
+    <button type="button" class="btn btn-clear" onclick="clearCart()">🗑️ تفريغ السلة</button>
+  </form>
+</section>
+
+<footer>
+  جميع الحقوق محفوظة &copy; 2025 - Luxe.Closet
+</footer>
+
+<script>
+function sendWhatsApp() {
+  const fname=document.getElementById('fname').value;
+  const lname=document.getElementById('lname').value;
+  const phone=document.getElementById('phone').value;
+  const state=document.getElementById('state').value;
+  const size=document.getElementById('size').value;
+
+  if(!fname||!lname||!phone||!state||!size){
+    alert('الرجاء تعبئة جميع الحقول'); return;
+  }
+
+  const message=`طلب جديد:%0Aالاسم: ${fname}%0Aاللقب: ${lname}%0Aرقم الهاتف: ${phone}%0Aالولاية: ${state}%0Aالمقاس: ${size}`;
+  const whatsappNumber="213668086810"; // ضع رقمك هنا
+  const url=`https://wa.me/${whatsappNumber}?text=${message}`;
+  window.open(url,"_blank");
+}
+
+function clearCart(){
+  localStorage.removeItem('cart');
+  alert('تم تفريغ السلة');
+  location.reload();
+}
+
+/* Parallax حركة الخلفية عند التمرير */
+window.addEventListener('scroll',function(){
+  const scrolled = window.scrollY;
+  document.querySelector('.hero').style.backgroundPositionY = -(scrolled*0.3) + 'px';
+});
+</script>
 
 </body>
-</html>
+  </html>
