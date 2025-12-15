@@ -1,112 +1,137 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>نموذج الطلب</title>
-  <style>
-    /* تصميم عام */
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #0d0d0d;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      flex-direction: column;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نموذج الطلب الاحترافي</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  /* خلفية متدرجة */
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #0d0d0d, #2f4f2f);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    flex-direction: column;
+    text-align: center;
+  }
 
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      color: #b2b200; /* أخضر زيتوني */
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
-    }
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #b2b200;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+  }
 
-    form {
-      background: #1a1a1a;
-      padding: 30px 40px;
-      border-radius: 15px;
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-      width: 100%;
-      max-width: 400px;
-    }
+  form {
+    background: rgba(0,0,0,0.7);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0,0,0,0.8);
+    width: 100%;
+    max-width: 450px;
+    animation: fadeIn 1s ease-in-out;
+  }
 
-    input, select {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border-radius: 10px;
-      border: 2px solid #556b2f; /* أخضر زيتوني */
-      background: #0d0d0d;
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: 0.3s;
-    }
+  @keyframes fadeIn {
+    from {opacity:0; transform: translateY(-20px);}
+    to {opacity:1; transform: translateY(0);}
+  }
 
-    input:focus, select:focus {
-      border-color: #b2b200;
-      box-shadow: 0 0 10px #b2b200;
-    }
+  label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    font-weight: bold;
+    margin-top: 15px;
+  }
 
-    label {
-      display: block;
-      text-align: right;
-      margin-top: 10px;
-      font-weight: bold;
-    }
+  label i {
+    margin-left: 10px;
+    color: #b2b200;
+  }
 
-    /* أزرار مضيئة */
-    .btn {
-      padding: 12px 25px;
-      font-size: 1.1rem;
-      margin: 10px 0;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      color: #fff;
-      background: linear-gradient(45deg, #556b2f, #b2b200); /* أخضر زيتوني */
-      box-shadow: 0 5px 15px rgba(178, 178, 0, 0.5);
-      transition: all 0.3s ease;
-      width: 100%;
-    }
+  input, select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 5px;
+    border-radius: 12px;
+    border: 2px solid #556b2f;
+    background: #0d0d0d;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s;
+  }
 
-    .btn:hover {
-      box-shadow: 0 0 20px #b2b200, 0 0 30px #556b2f;
-      transform: translateY(-3px);
-    }
+  input:focus, select:focus {
+    border-color: #b2b200;
+    box-shadow: 0 0 12px #b2b200;
+  }
 
-    /* زر تفريغ السلة */
-    .btn-clear {
-      background: linear-gradient(45deg, #8b0000, #ff4d4d);
-      box-shadow: 0 5px 15px rgba(255, 0, 0, 0.5);
-    }
+  /* أزرار متحركة ومضيئة */
+  .btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    cursor: pointer;
+    background: linear-gradient(45deg, #556b2f, #b2b200);
+    box-shadow: 0 0 15px #b2b200, 0 0 25px #556b2f;
+    transition: all 0.3s ease;
+    animation: glow 2s infinite alternate;
+  }
 
-    .btn-clear:hover {
-      box-shadow: 0 0 20px #ff4d4d, 0 0 30px #8b0000;
-      transform: translateY(-3px);
-    }
-  </style>
+  .btn:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 25px #b2b200, 0 0 40px #556b2f;
+  }
+
+  .btn-clear {
+    background: linear-gradient(45deg, #8b0000, #ff4d4d);
+    box-shadow: 0 0 15px #ff4d4d, 0 0 25px #8b0000;
+    animation: glow-red 2s infinite alternate;
+    margin-top: 10px;
+  }
+
+  .btn-clear:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 0 25px #ff4d4d, 0 0 40px #8b0000;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 10px #b2b200, 0 0 20px #556b2f; }
+    100% { box-shadow: 0 0 25px #b2b200, 0 0 40px #556b2f; }
+  }
+
+  @keyframes glow-red {
+    0% { box-shadow: 0 0 10px #ff4d4d, 0 0 20px #8b0000; }
+    100% { box-shadow: 0 0 25px #ff4d4d, 0 0 40px #8b0000; }
+  }
+</style>
 </head>
 <body>
 
-<h1>نموذج الطلب</h1>
+<h1>نموذج الطلب الاحترافي</h1>
 
 <form id="checkoutForm">
-  <label for="fname">الاسم</label>
+  <label for="fname"><i class="fa-solid fa-user"></i> الاسم</label>
   <input type="text" id="fname" placeholder="ادخل الاسم" required>
 
-  <label for="lname">اللقب</label>
+  <label for="lname"><i class="fa-solid fa-user"></i> اللقب</label>
   <input type="text" id="lname" placeholder="ادخل اللقب" required>
 
-  <label for="phone">رقم الهاتف</label>
+  <label for="phone"><i class="fa-solid fa-phone"></i> رقم الهاتف</label>
   <input type="tel" id="phone" placeholder="ادخل رقم الهاتف" required>
 
-  <label for="state">اختر الولاية</label>
+  <label for="state"><i class="fa-solid fa-map-location-dot"></i> الولاية</label>
   <select id="state" required>
     <option value="">اختر الولاية</option>
     <option>01 أدرار</option>
@@ -169,7 +194,7 @@
     <option>58 المنيعة</option>
   </select>
 
-  <label for="size">المقاس</label>
+  <label for="size"><i class="fa-solid fa-shirt"></i> المقاس</label>
   <select id="size" required>
     <option value="">اختر المقاس</option>
     <option>S</option>
@@ -179,15 +204,37 @@
     <option>XXL</option>
   </select>
 
-  <!-- زر إرسال الطلب -->
-  <button type="submit" class="btn">تأكيد الطلب</button>
-
-  <!-- زر تفريغ السلة -->
-  <button type="button" class="btn btn-clear"
-    onclick="localStorage.removeItem('cart'); alert('تم تفريغ السلة'); location.reload();">
-    🗑️ تفريغ السلة
-  </button>
+  <button type="button" class="btn" onclick="sendWhatsApp()">تأكيد الطلب</button>
+  <button type="button" class="btn btn-clear" onclick="clearCart()">🗑️ تفريغ السلة</button>
 </form>
 
+<script>
+function sendWhatsApp() {
+  const fname = document.getElementById('fname').value;
+  const lname = document.getElementById('lname').value;
+  const phone = document.getElementById('phone').value;
+  const state = document.getElementById('state').value;
+  const size = document.getElementById('size').value;
+
+  if(!fname || !lname || !phone || !state || !size){
+    alert('الرجاء تعبئة جميع الحقول');
+    return;
+  }
+
+  const message = `طلب جديد:%0Aالاسم: ${fname}%0Aاللقب: ${lname}%0Aرقم الهاتف: ${phone}%0Aالولاية: ${state}%0Aالمقاس: ${size}`;
+  
+  const whatsappNumber = "213XXXXXXXXX"; // ضع رقمك هنا
+  const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+  
+  window.open(url, "_blank");
+}
+
+function clearCart() {
+  localStorage.removeItem('cart');
+  alert('تم تفريغ السلة');
+  location.reload();
+}
+</script>
+
 </body>
-  </html>
+                                                               </html>
