@@ -3,33 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>صفحة الطلب</title>
+  <title>اختر ولايتك</title>
   <style>
+    /* تصميم عام */
     body {
-      font-family: Arial, sans-serif;
-      direction: rtl;
-      padding: 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      flex-direction: column;
+      text-align: center;
     }
-    select, button.big {
-      padding: 10px;
-      font-size: 16px;
-      margin: 10px 0;
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
     }
-    button.big {
-      background-color: #ff4d4d;
-      color: white;
+
+    form {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    select {
+      padding: 12px;
+      font-size: 1rem;
+      border-radius: 10px;
       border: none;
-      cursor: pointer;
-      border-radius: 5px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
     }
-    button.big:hover {
-      background-color: #e60000;
+
+    /* تصميم الأزرار المضيئة */
+    .btn {
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+      box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      box-shadow: 0 0 20px #ff4b2b, 0 0 30px #ff416c;
+      transform: translateY(-3px);
+    }
+
+    /* زر تفريغ السلة */
+    .btn-clear {
+      background: linear-gradient(45deg, #ff4d4d, #e60000);
+      box-shadow: 0 5px 15px rgba(230, 0, 0, 0.5);
+    }
+
+    .btn-clear:hover {
+      box-shadow: 0 0 20px #e60000, 0 0 30px #ff4d4d;
+      transform: translateY(-3px);
     }
   </style>
 </head>
 <body>
 
-<h2>اختر ولايتك</h2>
+<h1>اختر ولايتك</h1>
 
 <form id="checkoutForm">
   <select id="state" required>
@@ -94,9 +141,14 @@
     <option>58 المنيعة</option>
   </select>
 
+  <br>
+
+  <!-- زر إرسال الطلب -->
+  <button type="submit" class="btn">تأكيد الطلب</button>
+
   <!-- زر تفريغ السلة -->
-  <button type="button" class="big"
-    onclick="localStorage.removeItem('cart'); location.reload();">
+  <button type="button" class="btn btn-clear"
+    onclick="localStorage.removeItem('cart'); alert('تم تفريغ السلة'); location.reload();">
     🗑️ تفريغ السلة
   </button>
 </form>
