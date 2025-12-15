@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>المتجر</title>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<a href="checkout.html" class="cart-btn">
+🛒 السلة (<span id="cartCount">0</span>)
+</a>
+
+<h2>المنتجات</h2>
+
+<div class="product">
+  <img src="./assets/shirt1.jpg">
+  <h3>قميص أبيض</h3>
+  <p>2500 دج</p>
+  <select id="s1">
+    <option>S</option><option>M</option><option>L</option><option>XL</option>
+  </select>
+  <button onclick="addToCart('قميص أبيض - ' + s1.value, 2500)">أضف للسلة</button>
+</div>
+
+<div class="product">
+  <img src="./assets/shirt2.jpg">
+  <h3>قميص أسود</h3>
+  <p>2700 دج</p>
+  <select id="s2">
+    <option>S</option><option>M</option><option>L</option><option>XL</option>
+  </select>
+  <button onclick="addToCart('قميص أسود - ' + s2.value, 2700)">أضف للسلة</button>
+</div>
+
+</body>
+</html>
