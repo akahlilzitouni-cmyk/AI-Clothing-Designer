@@ -1,46 +1,88 @@
+/* ====== السلة ====== */
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+/* تحديث عدد السلة */
 function updateCartCount(){
-  let c = document.getElementById("cartCount");
-  if(c) c.innerText = cart.length;
+  const el = document.getElementById("cartCount");
+  if(el) el.textContent = cart.length;
 }
 updateCartCount();
 
+/* إضافة منتج */
 function addToCart(name, price){
   cart.push({name, price});
   localStorage.setItem("cart", JSON.stringify(cart));
   updateCartCount();
-  alert("تمت الإضافة للسلة");
+  alert("✔️ تمت إضافة المنتج إلى السلة");
 }
 
-if(document.getElementById("orderDetails")){
-  let text = "", total = 0;
+/* عرض الطلبات في checkout */
+function loadOrder(){
+  const box = document.getElementById("orderDetails");
+  if(!box) return;
+
+  let text = "";
+  let total = 0;
+
+  if(cart.length === 0){
+    box.value = "السلة فارغة";
+    return;
+  }
+
+  cart.forEach((item, i) => {
+    text += `${i+1}- ${item.name} | ${item.price} دج\n`;
+    total += item.price;
+  });
+
+  text += `\n💰 المجموع: ${total} دج`;
+  box.value = text;
+}
+
+/* إرسال الطلب */
+document.getElementById("orderForm")?.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  if(cart.length === 0){
+    alert("❌ السلة فارغة");
+    return;
+  }
+
+  const name = this.querySelector("input[placeholder='الاسم الكامل']").value;
+  const phone = this.querySelector("input[placeholder='رقم الهاتف']").value;
+  const address = this.querySelector("input[placeholder='العنوان']").value;
+  const state = document.getElementById("state").value;
+
+  if(!state){
+    alert("❗ اختر الولاية");
+    return;
+  }
+
+  let order = "";
+  let total = 0;
+
   cart.forEach(i=>{
-    text += `- ${i.name} : ${i.price} دج\n`;
+    order += `- ${i.name} (${i.price} دج)\n`;
     total += i.price;
   });
-  document.getElementById("orderDetails").value =
-  text + "\nالمجموع: " + total + " دج";
-}
-
-document.getElementById("orderForm")?.addEventListener("submit", e=>{
-  e.preventDefault();
-  if(!confirm("تأكيد الطلب؟")) return;
-
-  let n = e.target[0].value;
-  let p = e.target[1].value;
-  let a = e.target[2].value;
-  let o = document.getElementById("orderDetails").value;
 
   let msg = `🛍️ طلب جديد
-الاسم: ${n}
-الهاتف: ${p}
-العنوان: ${a}
+👤 الاسم: ${name}
+📞 الهاتف: ${phone}
+📍 الولاية: ${state}
+🏠 العنوان: ${address}
 
-${o}`;
+📦 الطلب:
+${order}
+
+💰 المجموع: ${total} دج`;
 
   window.open(
     "https://wa.me/213668086810?text=" + encodeURIComponent(msg),
     "_blank"
   );
+
+  localStorage.removeItem("cart");
 });
+
+/* تحميل الطلب عند فتح الصفحة */
+loadOrder();
