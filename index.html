@@ -284,20 +284,20 @@
   <div class="products">
 
     <div class="product-card" onclick="selectProduct('تيشيرت أحمر', 'assets/shirt-red.jpg')">
-  <img src="assets/shirt-red.jpg" alt="تيشيرت أحمر">
-  <h4>تيشيرت أحمر</h4>
+  <img src="assets/shirt-red.jpg" alt="تيشيرت ابيض">
+  <h4>تيشيرت ابيض</h4>
   <p>مقاسات مختلفة، جودة عالية، تصميم عصري.</p>
     </div>
 
-    <div class="product-card">
+    <div class="product-card" onclick="selectProduct(' سبايدر', 'assets/hoodie.jpg')">
       <img src="assets/hoodie.jpg" alt=" سبايدر">
       <h4> سبايدر</h4>
       <p>راحة وأناقة في نفس الوقت، مناسب لجميع الأوقات.</p>
     </div>
 
-    <div class="product-card">
-      <img src="assets/jacket.jpg" alt="قيص احمر ">
-      <h4>قميص احمر</h4>
+    <div class="product-card" onclick="selectProduct('تيشيرت أحمر', 'assets/jacket.jpg')">
+      <img src="assets/jacket.jpg" alt="تيشرت احمر ">
+      <h4>تيشرت احمر</h4>
       <p>تصميم فخم ومتين، للأيام الباردة.</p>
     </div>
 
@@ -378,16 +378,16 @@
 <select id="product" required>
   <option value="">اختر المنتج</option>
   <option 
-    value="تيشيرت أحمر|https://akahlilzitouni-cmyk.github.io/AI-Clothing-Designer/assets/shirt-red.jpg">
-    تيشيرت أحمر
+    value="تيشيرت ابيض|https://akahlilzit-cmyk.github.io/AI-Clothing-Designer/assets/shirt-red.jpg">
+    تيشيرت ابيض
   </option>
   <option 
     value=" سبايدر|https://akahlilzitouni-cmyk.github.io/AI-Clothing-Designer/assets/hoodie.jpg">
     سبايدر
   </option>
   <option 
-    value="هودي أسود|https://akahlilzitouni-cmyk.github.io/AI-Clothing-Designer/assets/jacket.jpg">
-    هودي أسود
+    value="تيشرت أسود|https://akahlilzitouni-cmyk.github.io/AI-Clothing-Designer/assets/jacket.jpg">
+    تيشرت أسود
   </option>
   </select>
     <label for="size"><i class="fa-solid fa-shirt"></i> المقاس</label>
@@ -410,37 +410,41 @@
 </footer>
 
 <<script>
+  let selectedProduct = "";
+let selectedImage = "";
+
+function selectProduct(name, image) {
+  selectedProduct = name;
+  selectedImage = image;
+  alert("✔️ تم اختيار: " + name);
+  }
 function sendWhatsApp() {
-  const fname = fnameEl = document.getElementById('fname').value.trim();
+  const fname = document.getElementById('fname').value.trim();
   const lname = document.getElementById('lname').value.trim();
   const phone = document.getElementById('phone').value.trim();
   const state = document.getElementById('state').value;
   const size = document.getElementById('size').value;
-  const productData = document.getElementById('product').value;
 
-  if (!fname || !lname || !phone || !state || !size || !productData) {
-    alert("الرجاء تعبئة جميع الحقول");
+  if (!fname || !lname || !phone || !state || !size || !selectedProduct) {
+    alert("الرجاء اختيار المنتج وملء جميع الحقول");
     return;
   }
 
-  const [productName, productImage] = productData.split("|");
-
   const whatsappNumber = "213668086810"; // رقمك
+
   const message =
-`🛍️ طلب جديد
-
-👕 المنتج: ${productName}
-📏 المقاس: ${size}
-📍 الولاية: ${state}
-📞 الهاتف: ${phone}
-👤 الاسم: ${fname} ${lname}
-
-🖼️ صورة المنتج:
-${productImage}`;
+    "🛍️ طلب جديد\n\n" +
+    "👕 المنتج: " + selectedProduct + "\n" +
+    "📏 المقاس: " + size + "\n\n" +
+    "👤 الاسم: " + fname + " " + lname + "\n" +
+    "📞 الهاتف: " + phone + "\n" +
+    "📍 الولاية: " + state + "\n\n" +
+    "🖼️ صورة المنتج:\n" +
+    window.location.origin + "/" + selectedImage;
 
   const url = "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message);
-  window.location.href = url;
-}
+  window.open(url, "_blank");
+  }
 </script>
 }
 
